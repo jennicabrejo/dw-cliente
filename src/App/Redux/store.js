@@ -1,5 +1,6 @@
 import {createStore, combineReducers, applyMiddleware, compose} from "redux";
 import reducerLogin from "./reducers/login.reducer";
+import reducerCatedraticos from "./reducers/catedraticos.reducer";
 // import {composeWithDevTools} from "redux-devtools-extension";
 import * as reduxModule from 'redux';
 import thunk from 'redux-thunk';
@@ -25,6 +26,7 @@ const enhancer = composeEnhancers(
 
 const reducers = combineReducers({
     reducerLogin,
+    reducerCatedraticos,
 });
 
 const store = createStore(reducers, enhancer);
