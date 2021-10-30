@@ -5,7 +5,7 @@ import App from "./App";
 import store from "./App/Redux/store";
 
 ReactDOM.render(
-  <Provider store = {store}>
+  <Provider store = {store}> {/*ES EL PROVEDOR DE REDUX*/}
     <React.StrictMode>
       <App />
     </React.StrictMode>

@@ -1,5 +1,12 @@
 import { LOGIN } from "../actions/login.actions";
 
+
+/**
+  {
+      valido: falso;
+ }
+ */
+
 const estadoInicial = {
     Usuarios: [
         {
@@ -7,14 +14,18 @@ const estadoInicial = {
             usuario_nombre: "",
             usuario_password: "",
         }
-    ]
+    ],
+    valido: false
 };
 
 const reducerLogin = (state = estadoInicial, action) => {
     switch (action.type) {
         case LOGIN:
-            console.log(action.payload)
-            return estadoInicial;    
+            return {
+                Usuarios: action.payload,
+                // valido: action.payload.valido
+                valido: true
+            };    
         default:
             return estadoInicial;
     }
