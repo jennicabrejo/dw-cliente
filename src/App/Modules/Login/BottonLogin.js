@@ -1,32 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom"; //redirige a otras paginas
 import { loginServices } from "../../Redux/actions/login.actions";
-import { useDispatch /*ejecuta las acciones/actions*/, useSelector } from "react-redux"; //<--- 
-import {Button} from "@material-ui/core";
+import {
+  useDispatch /*ejecuta las acciones/actions*/,
+  useSelector,
+} from "react-redux"; //<---
+import { Button } from "@material-ui/core";
 
 const BottonLogin = () => {
-    //Redux
-    const dispatch = useDispatch();
-    // 
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [jsonResult, setResult] = useState({});
+  //Redux
+  const dispatch = useDispatch();
+  const history = useHistory();
+  //
 
   //Selectors
-  const valido = useSelector(({reducerLogin}) => reducerLogin.valido)
-  
+
+  const valido = useSelector(({ reducerLogin }) => reducerLogin.valido);
+
   const loginClick = () => {
-    setPass(document.getElementById("pss")?.value);
-    setEmail(document.getElementById("email")?.value);
-    dispatch(loginServices());
-  }
+    const usuario_password = document.getElementById("pss")?.value;
+    const usuario_nombre = document.getElementById("us")?.value;
+    dispatch(loginServices({ usuario_nombre, usuario_password }));
+  };
 
-/**Este reacciona ante cualquier cambio en sus variables */
-  useEffect(() =>{
+  /**Este reacciona ante cualquier cambio en sus variables */
+
+  useEffect(() => {
     console.log(valido);
-  },[valido]);
-
+    if (valido) {
+      history.replace("/catedraticos");
+    }
+    // eslint-disable-next-line
+  }, [valido]);
   return (
-    <Button variant="contained" onClick= {() => loginClick()}>Login</Button>
+    <Button variant="contained" onClick={() => loginClick()}>
+      Login
+    </Button>
   );
 };
 
