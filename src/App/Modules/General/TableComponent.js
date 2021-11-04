@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Table from "@material-ui/core/Table";
@@ -12,8 +12,9 @@ import Buscador from "./Buscador";
 import TableActionsCell from "./TableActionsCell";
 
 export default function TableComponent(props) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rows, setRows] = useState(props.rows || []);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -24,11 +25,33 @@ export default function TableComponent(props) {
     setPage(0);
   };
 
+  const combrobarConcurrencia = (argumento) => {
+    if (argumento && argumento !== "") {
+      const rows_ = props.rows.map((fila) => {
+        let tx = "";
+        Object.keys(fila).forEach((id) => {
+          tx += !Array.isArray(fila[id]) ? ` ${fila[id]}` : "";
+        });
+        return tx.includes(argumento) ? fila : null;
+      }).filter(Boolean);
+      setRows(rows_);
+    }else{
+      setRows(props.rows);
+    }
+  };
+
+  const propsBuscador = {
+    onClick: (argumento) => {
+      combrobarConcurrencia(argumento);
+    },
+    propsBasicSelect: props.propsBasicSelect
+  };
+
   return (
     <Grid item xs={12} style={{ margin: 24 }}>
       <Grid container>
         <Grid item xs={12}>
-          <Buscador />
+          <Buscador {...propsBuscador} />
         </Grid>
         <Grid item xs={12}>
           <Paper style={{ width: "100%", overflow: "hidden" }}>
@@ -48,7 +71,7 @@ export default function TableComponent(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {props.rows
+                  {rows
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
                       return (
@@ -67,7 +90,11 @@ export default function TableComponent(props) {
                                   : value}
                               </TableCell>
                             ) : (
-                              <TableActionsCell cell={value} column={column} current={row}/>
+                              <TableActionsCell
+                                cell={value}
+                                column={column}
+                                current={row}
+                              />
                             );
                           })}
                         </TableRow>
@@ -79,7 +106,7 @@ export default function TableComponent(props) {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, 100]}
               component="div"
-              count={props.rows.length}
+              count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

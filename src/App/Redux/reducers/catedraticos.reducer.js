@@ -1,21 +1,23 @@
-import { CAMBIARMENSAJE, HOLAMUNDO } from "../actions/catedraticos.actions";
+import {GET_CATEDRATICO} from "../actions/catedraticos.actions";
 
 const estadoInicial = {
-  mensaje: "pato",
+  catedraticoLog: {
+    _id: "",
+    catedratico_nombres: "",
+    catedratico_apellidos: "",
+    cursos: [],
+    usuario: {}
+  }
 };
 
 const reducerCatedraticos = (state = estadoInicial, action) => {
   switch (action.type) {
-    case HOLAMUNDO:
+    case GET_CATEDRATICO:
       return {
-        mensaje: action.payload
-      };
-    case CAMBIARMENSAJE:
-      return {
-        mensaje: action.payload
+        catedraticoLog: action.payload.catedratico
       };
     default:
-      return estadoInicial;
+      return state;
   }
 };
 

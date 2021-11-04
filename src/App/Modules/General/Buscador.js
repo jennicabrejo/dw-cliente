@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState} from "react";
 import { Grid, IconButton, InputAdornment } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import SearchIcon from "@mui/icons-material/Search";
@@ -14,8 +14,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Buscador() {
+export default function Buscador(props) {
   const classes = useStyles();
+  const [argumento, setArg] = useState("");
 
   return (
     <Grid container style={{ paddingBottom: 24 }} spacing={2}>
@@ -24,10 +25,13 @@ export default function Buscador() {
           fullWidth
           label="Buscar"
           id="fullWidth"
+          onBlur={(e) => setArg(e.target.value)}
           InputProps={{
             endAdornment: (
               <InputAdornment>
-                <IconButton style={{ padding: 4 }}>
+                <IconButton style={{ padding: 4 }} onClick = { () => {
+                  props.onClick(argumento);
+                }}>
                   <SearchIcon />
                 </IconButton>
               </InputAdornment>
@@ -36,14 +40,14 @@ export default function Buscador() {
           }}
         />
       </Grid>
-      {false &&
-        (true ? (
+      {(props.propsBasicSelect) &&
+        (!props.propsBasicSelect ? (
           <Grid item xs={12} md={4}>
             <SelectCheck />
           </Grid>
         ) : (
           <Grid item xs={12} md={4}>
-            <BasicSelect />
+            <BasicSelect {...props.propsBasicSelect}/>
           </Grid>
         ))}
     </Grid>

@@ -18,11 +18,11 @@ const reducerLogin = (state = estadoInicial, action) => {
         case LOGIN:
             const usuario = action.payload.Usuario;
             return {
-                usuario: usuario,
+                usuario: usuario || estadoInicial.usuario,
                 valido: Boolean(usuario?._id)
             };    
         default:
-            return estadoInicial;
+            return state;
     }
 }
 

@@ -1,24 +1,17 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
 import Table from "../../General/TableComponent";
-const rows = [
-  {
-    nombre: "Desarrollo Web",
-    codigo: "0509-1",
-    catedratico: "Ruldin"
-  },
-];
 
 const columns = [
-  { id: "codigo", label: "Codigo", minWidth: 150 },
-  { id: "nombre", label: "Curso", minWidth: 150 },
-  { id: "catedratico", label: "Catedratico", minWidth: 150 },
+  { id: "codigo_curso", label: "Codigo", minWidth: 150 },
+  { id: "Curso_nombre", label: "Curso", minWidth: 150 },
 ];
 
-const Cursos = () => {
+
+const Cursos = (props) => {
   //   const dispatch = useDispatch();
   const propsTable = {
-    rows,
+    rows: props.data,
     columns,
   };
 

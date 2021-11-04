@@ -27,7 +27,7 @@ const ButtonLogin = (props) => {
 
   const valido = useSelector(({ reducerLogin }) => reducerLogin.valido);
   const codigo_rol = useSelector(
-    ({ reducerLogin }) => reducerLogin.usuario.codigo_rol
+    ({ reducerLogin }) => reducerLogin.usuario?.codigo_rol
   );
 
   const loginClick = () => {
@@ -35,7 +35,8 @@ const ButtonLogin = (props) => {
       usuario_nombre: props.cred.us,
       usuario_password: props.cred.pass,
     };
-    dispatch(loginServices(credenciales));
+    if(props.cred.us && props.cred.pass)
+      dispatch(loginServices(credenciales));
   };
 
   /**Este reacciona ante cualquier cambio en sus variables */

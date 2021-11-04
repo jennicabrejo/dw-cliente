@@ -25,7 +25,7 @@ export const Estudiantes = () => {
   useEffect(() => {
     if (valido) {
       const rol = getRolByCod(codigo_rol);
-      if (rol.rol === "ESTUDIANTE") history.replace("/estudiantes");
+      // if (rol.rol === "ESTUDIANTE") history.replace("/estudiantes");
       if (rol.rol === "CATEDRATICO") history.replace("/catedraticos");
     }else{      
         history.replace("/");

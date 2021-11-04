@@ -1,6 +1,8 @@
 import {createStore, combineReducers, applyMiddleware, compose} from "redux";
 import reducerLogin from "./reducers/login.reducer";
 import reducerCatedraticos from "./reducers/catedraticos.reducer";
+import reducerCursos from "./reducers/cursos.reducer";
+import reducerEstudiantes from "./reducers/estudiantes.reducer";
 // import {composeWithDevTools} from "redux-devtools-extension";
 import * as reduxModule from 'redux';
 import thunk from 'redux-thunk';
@@ -27,6 +29,8 @@ const enhancer = composeEnhancers(
 const reducers = combineReducers({
     reducerLogin,
     reducerCatedraticos,
+    reducerCursos,
+    reducerEstudiantes
 });
 
 const store = createStore(reducers, enhancer);

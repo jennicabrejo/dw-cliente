@@ -1,20 +1,24 @@
-export const HOLAMUNDO = "HOLAMUNDO";
-export const CAMBIARMENSAJE = "CAMBIARMENSAJE";
+export const GET_ESTUDIANTES = "GET_ESTUDIANTES";
+export const GET_CATEDRATICO = "GET_CATEDRATICO";
 
-export const traerHolaMundo = () => {
-  return (dispatch) => {
+export const getCatedratico = ({usuario}) => {
+  return async (dispatch) => {
+    let url = "http://127.0.0.1:8000/proyectfinal/api/CatedraticoByIdUs?";
+    url+= new URLSearchParams({usuario});
+    console.log(url)
+    const respuesta = await fetch(url, {
+      method: "GET",
+    })
+      .then((req) => {
+        return req.json();
+      })
+      .catch((err) => {
+        console.log(err);
+        return "Hubo un error";
+      });
     dispatch({
-      type: HOLAMUNDO,
-      payload: "hola mundo",
+      type: GET_CATEDRATICO,
+      payload: respuesta,
     });
   };
 };
-
-export const cambiarMensaje = (mensaje) => {
-    return (dispatch) => {
-      dispatch({
-        type: CAMBIARMENSAJE, // tipo con el que se identifica en el switch del reducer
-        payload: mensaje, //valores de la accion
-      });
-    };
-  };
