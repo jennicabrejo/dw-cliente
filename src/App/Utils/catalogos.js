@@ -43,3 +43,7 @@ export const roles = [
     rol: "ADMINISTRADOR",
   },
 ];
+
+export const getRolByCod = (codigo_rol) => {
+  return roles.find((rol) => rol._id === codigo_rol);
+}

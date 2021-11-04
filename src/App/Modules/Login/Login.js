@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState, useEffect} from "react";
 import logo from "../../Static/logo2.png";
 import Formsy from "formsy-react";
 import {
@@ -40,12 +40,24 @@ const useStyles = makeStyles((theme) => ({
 
 export function Login() {
   const classes = useStyles();
+  //States
+  const [cred, setCred] = useState({
+    us: null,
+    pass: null
+  });
 
   const inputProps = {
     style: {
       background: "white" 
     }
-  }
+  };
+
+  useEffect(() => {
+    if(cred.us && cred.pass){
+      console.log(cred);
+    }
+  },[cred]);
+
   return (
     <Grid container className={classes.contain}>
       <Card className={`${classes.card}`}>
@@ -70,6 +82,7 @@ export function Login() {
                       autoComplete="off"
                       style={{ width: "100%"}}
                       inputProps={inputProps}
+                      onBlur={(e) => setCred({...cred, us: e.target.value })}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -81,12 +94,13 @@ export function Login() {
                       autoComplete="off"
                       style={{ width: "100%"}}
                       inputProps={inputProps}
+                      onBlur={(e) => setCred({...cred, pass: e.target.value })}
                     />
                   </Grid>
                 </Grid>
               </Formsy>
               <Box component="div" className={classes.box}>
-                <ButtonLogin />
+                <ButtonLogin cred = {cred}/>
               </Box>
             </CardContent>
           </Grid>

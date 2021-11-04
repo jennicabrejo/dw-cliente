@@ -1,7 +1,7 @@
 import { LOGIN } from "../actions/login.actions";
 
 const estadoInicial = {
-    Usuario: 
+    usuario: 
         {
             _id: "",
             codigo_rol: "",
@@ -18,7 +18,7 @@ const reducerLogin = (state = estadoInicial, action) => {
         case LOGIN:
             const usuario = action.payload.Usuario;
             return {
-                Usuario: usuario,
+                usuario: usuario,
                 valido: Boolean(usuario?._id)
             };    
         default:

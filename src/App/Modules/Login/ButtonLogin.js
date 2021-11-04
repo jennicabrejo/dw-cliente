@@ -7,6 +7,8 @@ import {
 } from "react-redux"; //<---
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import { getRolByCod } from "../../Utils/catalogos";
+
 const useStyles = makeStyles((theme) => ({
   btnl: {
     backgroundColor: "black",
@@ -14,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ButtonLogin = () => {
+const ButtonLogin = (props) => {
   const classes = useStyles();
   //Redux
   const dispatch = useDispatch();
@@ -24,24 +26,35 @@ const ButtonLogin = () => {
   //Selectors
 
   const valido = useSelector(({ reducerLogin }) => reducerLogin.valido);
+  const codigo_rol = useSelector(
+    ({ reducerLogin }) => reducerLogin.usuario.codigo_rol
+  );
 
   const loginClick = () => {
-    const usuario_password = document.getElementById("pss")?.value;
-    const usuario_nombre = document.getElementById("us")?.value;
-    dispatch(loginServices({ usuario_nombre, usuario_password }));
+    const credenciales = {
+      usuario_nombre: props.cred.us,
+      usuario_password: props.cred.pass,
+    };
+    dispatch(loginServices(credenciales));
   };
 
   /**Este reacciona ante cualquier cambio en sus variables */
 
   useEffect(() => {
     if (valido) {
-      history.replace("/catedraticos");
-    }
+      const rol = getRolByCod(codigo_rol);
+      if (rol.rol === "ESTUDIANTE") history.replace("/estudiantes");
+      if (rol.rol === "CATEDRATICO") history.replace("/catedraticos");
+    } 
     // eslint-disable-next-line
   }, [valido]);
 
   return (
-    <Button variant="contained" className={classes.btnl} onClick={() => loginClick()}>
+    <Button
+      variant="contained"
+      className={classes.btnl}
+      onClick={() => loginClick()}
+    >
       Login
     </Button>
   );
