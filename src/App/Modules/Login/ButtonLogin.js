@@ -6,8 +6,16 @@ import {
   useSelector,
 } from "react-redux"; //<---
 import { Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+const useStyles = makeStyles((theme) => ({
+  btnl: {
+    backgroundColor: "black",
+    color: "white",
+  },
+}));
 
-const BottonLogin = () => {
+const ButtonLogin = () => {
+  const classes = useStyles();
   //Redux
   const dispatch = useDispatch();
   const history = useHistory();
@@ -26,17 +34,17 @@ const BottonLogin = () => {
   /**Este reacciona ante cualquier cambio en sus variables */
 
   useEffect(() => {
-    console.log(valido);
     if (valido) {
       history.replace("/catedraticos");
     }
     // eslint-disable-next-line
   }, [valido]);
+
   return (
-    <Button variant="contained" onClick={() => loginClick()}>
+    <Button variant="contained" className={classes.btnl} onClick={() => loginClick()}>
       Login
     </Button>
   );
 };
 
-export default BottonLogin;
+export default ButtonLogin;

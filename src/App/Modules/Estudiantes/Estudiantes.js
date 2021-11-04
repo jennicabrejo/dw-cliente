@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 // import { useSelector, useDispatch } from "react-redux";
 import Main from "../General/Main";
-import Alumnos from "./components/Alumnos";
-import Cursos from "./components/Cursos";
+import Companieros from "./components/Companieros"
 //
-const mainBar = ["Alumnos", "Cursos", "Cargar Notas", "Cargar Alumnos"];
+const mainBar = ["Compañeros", "Cursos", "Notas"];
 
-export const Catedraticos = () => {
+export const Estudiantes = () => {
   //   const dispatch = useDispatch();
   const [item, setItem] = useState(null);
 
@@ -21,9 +20,7 @@ export const Catedraticos = () => {
       setItem={setItem}
       content={
         mainBar[0] === item ? (
-          <Alumnos />
-        ) : mainBar[1] === item ? (
-          <Cursos />
+          <Companieros />
         ) : null
       }
     />

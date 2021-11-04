@@ -1,23 +1,99 @@
-import React from "react";
-import BottonLogin from "./BottonLogin"
-import { Link } from "react-router-dom";
+import * as React from "react";
+import logo from "../../Static/logo2.png";
+import Formsy from "formsy-react";
+import {
+  Card,
+  CardContent,
+  Box,
+  Grid,
+  TextField,
+  CardMedia,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import ButtonLogin from "./ButtonLogin";
 
-const Login = () => {
+const useStyles = makeStyles((theme) => ({
+  contain: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "brown",
+  },
+  card: {
+    width: 400,
+    height: 500,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  center: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  box: {
+    display: "flex",
+    justifyContent: "right",
+    padding: "16px 0px 0px 0px",
+  },
+}));
+
+export function Login() {
+  const classes = useStyles();
+
+  const inputProps = {
+    style: {
+      background: "white" 
+    }
+  }
   return (
-    <div className="card">
-      <div className="card-header">
-        <h1>Log In</h1>
-      </div>
-      <div className="card-body">
-        <input type="text" placeholder="Usuario" id="us"/>
-        <input type="password" placeholder="Password" id="pss"/>
-        <BottonLogin/>
-        <p>
-          Don't have an account? <Link to="/signup">Sign Up</Link>{" "}
-        </p>
-      </div>
-    </div>
+    <Grid container className={classes.contain}>
+      <Card className={`${classes.card}`}>
+        <Grid container>
+          <Grid item xs={12} className={classes.center}>
+            <CardMedia
+              style={{ height: 192, width: "auto"}}
+              component="img"
+              image={logo}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <CardContent>
+              <Formsy>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="filled"
+                      id="outlined-required"
+                      label="Usuario"
+                      defaultValue=""
+                      autoComplete="off"
+                      style={{ width: "100%"}}
+                      inputProps={inputProps}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="filled"
+                      id="outlined-password-input"
+                      label="Contraseña"
+                      type="password"
+                      autoComplete="off"
+                      style={{ width: "100%"}}
+                      inputProps={inputProps}
+                    />
+                  </Grid>
+                </Grid>
+              </Formsy>
+              <Box component="div" className={classes.box}>
+                <ButtonLogin />
+              </Box>
+            </CardContent>
+          </Grid>
+        </Grid>
+      </Card>
+    </Grid>
   );
-};
+}
 
 export default Login;
