@@ -3,6 +3,7 @@ import reducerLogin from "./reducers/login.reducer";
 import reducerCatedraticos from "./reducers/catedraticos.reducer";
 import reducerCursos from "./reducers/cursos.reducer";
 import reducerEstudiantes from "./reducers/estudiantes.reducer";
+import reducerNotas from "./reducers/notas.reducer";
 // import {composeWithDevTools} from "redux-devtools-extension";
 import * as reduxModule from 'redux';
 import thunk from 'redux-thunk';
@@ -30,7 +31,8 @@ const reducers = combineReducers({
     reducerLogin,
     reducerCatedraticos,
     reducerCursos,
-    reducerEstudiantes
+    reducerEstudiantes,
+    reducerNotas
 });
 
 const store = createStore(reducers, enhancer);

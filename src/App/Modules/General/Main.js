@@ -63,12 +63,12 @@ export default function Main(props) {
           <ListItemText primary={"Sesion"} />
         </ListItem>
         <Divider />
-        {props.menuDrawer?.map((text, index) => (
-          <ListItem button key={text} onClick={() => props.setItem(text)}>
+        {props.menuDrawer?.map((itBar, index) => (
+          <ListItem button key={itBar.text} onClick={() => props.setItem(itBar)}>
             <ListItemIcon>
-              <IconSelector icono={text} />
+              <IconSelector icono={itBar.text} />
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary={itBar.text} />
           </ListItem>
         ))}
       </List>

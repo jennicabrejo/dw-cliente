@@ -4,34 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Table from "../../General/TableComponent";
 import { getListaEstudiantesByIC } from "../../../Redux/actions/estudiantes.actions";
 
-const actions = [
-  {
-    id: "editar",
-    type: "IconButton",
-    icon: "ModeEditIcon",
-    tip: "Editar",
-    onClick: (current) => {console.log(current)},
-    propsIButton: {
-      style: { padding: 4 },
-    },
-    propsIcon: {
-      style: { color: "orange" },
-    },
-  },
-  {
-    id: "eliminar",
-    type: "IconButton",
-    icon: "DeleteIcon",
-    tip: "Eliminar",onClick: (current) => {console.log(current)},
-    propsIButton: {
-      style: { padding: 4 },
-    },
-    propsIcon: {
-      style: { color: "brown" },
-    },
-  },
-];
-
 const columns = [
   { id: "carnet", label: "Carnet", minWidth: 150 },
   { id: "nombreCompleto", label: "Nombre", minWidth: 150 },
@@ -48,6 +20,7 @@ const Alumnos = (props) => {
   
   const propsTable = {
     rows: alumnosList || [],
+    title: "Lista de Alumnos",
     columns,
     propsBasicSelect: {
       items: props.cursos.map((curso) => { return {

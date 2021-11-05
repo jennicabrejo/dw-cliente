@@ -7,10 +7,6 @@ export const Catedraticos = () => {
   //   const dispatch = useDispatch();
   const [item, setItem] = useState(null);
 
-  useEffect(() => {
-    console.log(item);
-  }, [item]);
-
   return (
     <Main
       menuDrawer={mainBar}

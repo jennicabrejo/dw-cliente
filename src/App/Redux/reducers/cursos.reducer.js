@@ -1,4 +1,5 @@
 import {GET_LIST_CURSOS} from "../actions/cursos.actions";
+import { REBOOT } from "../actions/general.actions";
 
 const estadoInicial = {
   cursos: {
@@ -11,6 +12,7 @@ const reducerCursos = (state = estadoInicial, action) => {
       return {
         cursos: action.payload
       };
+    case REBOOT: return estadoInicial;
     default:
       return state;
   }

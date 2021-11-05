@@ -5,7 +5,6 @@ export const getCatedratico = ({usuario}) => {
   return async (dispatch) => {
     let url = "http://127.0.0.1:8000/proyectfinal/api/CatedraticoByIdUs?";
     url+= new URLSearchParams({usuario});
-    console.log(url)
     const respuesta = await fetch(url, {
       method: "GET",
     })

@@ -52,12 +52,6 @@ export function Login() {
     }
   };
 
-  useEffect(() => {
-    if(cred.us && cred.pass){
-      console.log(cred);
-    }
-  },[cred]);
-
   return (
     <Grid container className={classes.contain}>
       <Card className={`${classes.card}`}>

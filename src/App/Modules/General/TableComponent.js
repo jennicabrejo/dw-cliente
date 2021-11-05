@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Table from "@material-ui/core/Table";
@@ -10,9 +10,10 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Buscador from "./Buscador";
 import TableActionsCell from "./TableActionsCell";
+import TableHeader from "./TableHeader";
 
 export default function TableComponent(props) {
-  const [rows, setRows] = useState(props.rows || []);
+  const [rows, setRows] = useState(props?.rows || []);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -27,15 +28,17 @@ export default function TableComponent(props) {
 
   const combrobarConcurrencia = (argumento) => {
     if (argumento && argumento !== "") {
-      const rows_ = props.rows.map((fila) => {
-        let tx = "";
-        Object.keys(fila).forEach((id) => {
-          tx += !Array.isArray(fila[id]) ? ` ${fila[id]}` : "";
-        });
-        return tx.includes(argumento) ? fila : null;
-      }).filter(Boolean);
+      const rows_ = props.rows
+        .map((fila) => {
+          let tx = "";
+          Object.keys(fila).forEach((id) => {
+            tx += !Array.isArray(fila[id]) ? ` ${fila[id]}` : "";
+          });
+          return tx.includes(argumento) ? fila : null;
+        })
+        .filter(Boolean);
       setRows(rows_);
-    }else{
+    } else {
       setRows(props.rows);
     }
   };
@@ -44,8 +47,12 @@ export default function TableComponent(props) {
     onClick: (argumento) => {
       combrobarConcurrencia(argumento);
     },
-    propsBasicSelect: props.propsBasicSelect
+    propsBasicSelect: props.propsBasicSelect,
   };
+
+  useEffect(() => {
+    setRows(props.rows);
+  }, [props?.rows]);
 
   return (
     <Grid item xs={12} style={{ margin: 24 }}>
@@ -55,6 +62,7 @@ export default function TableComponent(props) {
         </Grid>
         <Grid item xs={12}>
           <Paper style={{ width: "100%", overflow: "hidden" }}>
+            <TableHeader {...props} />
             <TableContainer>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -73,7 +81,7 @@ export default function TableComponent(props) {
                 <TableBody>
                   {rows
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
+                    .map((row, index) => {
                       return (
                         <TableRow
                           hover
@@ -93,7 +101,7 @@ export default function TableComponent(props) {
                               <TableActionsCell
                                 cell={value}
                                 column={column}
-                                current={row}
+                                current={{row, index}}
                               />
                             );
                           })}

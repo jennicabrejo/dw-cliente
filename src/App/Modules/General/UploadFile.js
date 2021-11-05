@@ -3,20 +3,27 @@ import { styled } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Stack from "@mui/material/Stack";
+import Tooltip from "@material-ui/core/Tooltip";
 import * as XLSX from "xlsx";
 
 const Input = styled("input")({
   display: "none",
 });
 
-export default function UploadFile() {
+export default function UploadFile(props) {
   //States
   const [file_, setFile] = useState(null);
+  const [json, setJson] = useState([]);
 
   // Funciones
   const upload = (e) => {
-    const file = e.target.files[0];
-    setFile(file);
+    if (e.target.files?.length) {
+      const file = e.target?.files[0];
+      setFile(file);
+      e.target.value = null;
+    } else {
+      console.log("Err: ", e.target);
+    }
   };
 
   useEffect(() => {
@@ -25,15 +32,22 @@ export default function UploadFile() {
       fileRender.onload = (e) => {
         let data = e.target.result;
         let workbook = XLSX.read(data, { type: "binary" });
-        console.log("eee", workbook);
         workbook.SheetNames.forEach((name) => {
           let sheetJson = XLSX.utils.sheet_to_json(workbook.Sheets[name]);
-          console.log(sheetJson);
+          setJson(sheetJson);
         });
       };
       fileRender.readAsBinaryString(file_);
     }
+    // eslint-disable-next-line
   }, [file_]);
+
+  useEffect(() => {
+    if (json.length) {
+      props.jsonResult(json);
+    }
+    // eslint-disable-next-line
+  }, [json]);
 
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
@@ -44,13 +58,15 @@ export default function UploadFile() {
           type="file"
           onChange={upload}
         />
-        <IconButton
-          color="primary"
-          aria-label="upload picture"
-          component="span"
-        >
-          <UploadFileIcon />
-        </IconButton>
+        <Tooltip title="Cargar XLSX">
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="span"
+          >
+            <UploadFileIcon />
+          </IconButton>
+        </Tooltip>
       </label>
     </Stack>
   );

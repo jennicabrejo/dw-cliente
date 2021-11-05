@@ -1,4 +1,5 @@
 import {GET_CATEDRATICO} from "../actions/catedraticos.actions";
+import { REBOOT } from "../actions/general.actions";
 
 const estadoInicial = {
   catedraticoLog: {
@@ -16,6 +17,7 @@ const reducerCatedraticos = (state = estadoInicial, action) => {
       return {
         catedraticoLog: action.payload.catedratico
       };
+    case REBOOT: return estadoInicial;
     default:
       return state;
   }

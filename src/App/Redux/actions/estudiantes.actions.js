@@ -1,4 +1,5 @@
 export const GET_LIST_ESTUDIANTES_ID_CURSO = "GET_LIST_ESTUDIANTES_ID_CURSO"
+export const GET_ESTUDIANTE_US = "GET_ESTUDIANTE_US"
 
 const unirNombresCursos = (cursos) => {
   let texto = "";
@@ -29,7 +30,6 @@ export const getListaEstudiantesByIC = ({_id}) => {
     return async (dispatch) => {
       let url = "http://127.0.0.1:8000/proyectfinal/api/EstudianteByIdCurso?";
       url+= new URLSearchParams({_id});
-      console.log(url)
       const respuesta = await fetch(url, {
         method: "GET",
       })
@@ -46,4 +46,26 @@ export const getListaEstudiantesByIC = ({_id}) => {
       });
     };
   };
+
+export const getEstudianteUs = ({usuario}) => {
+  return async (dispatch) => {
+    let url = "http://127.0.0.1:8000/proyectfinal/api/EstudianteByIdUs?";
+    url+= new URLSearchParams({usuario});
+    const respuesta = await fetch(url, {
+      method: "GET",
+    })
+      .then((req) => {
+        return req.json();
+      })
+      .catch((err) => {
+        console.log(err);
+        return "Hubo un error";
+      });
+    dispatch({
+      type: GET_ESTUDIANTE_US,
+      payload: respuesta,
+    });
+  };
+};
+
   

@@ -4,7 +4,6 @@ export const getListaCursos = ({listaCursos}) => {
     return async (dispatch) => {
       let url = "http://127.0.0.1:8000/proyectfinal/api/Cursos?";
       url+= new URLSearchParams({listaCursos});
-      console.log(url)
       const respuesta = await fetch(url, {
         method: "GET",
       })
