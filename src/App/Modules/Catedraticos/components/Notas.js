@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@material-ui/core";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 import Table from "../../General/TableComponent";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { postNotasXLSX, reDon } from "../../../Redux/actions/notas.actions";
+import {
+  postNotasXLSX,
+  reDon,
+  getNotasCurso,
+  deleteNotasCurso,
+} from "../../../Redux/actions/notas.actions";
 import Modal from "../../General/Modal";
 import EditarNotas from "./EditarNotas";
+import EliminarNota from "./EliminarNota";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,29 +30,36 @@ const columns = [
   { id: "actions", label: "Acciones", minWidth: 150 },
 ];
 
-const PreviewNotas = (props) => {
+const Notas = (props) => {
   // Styles
   const classes = useStyles();
   // Redux
   const dispatch = useDispatch();
- // Reducer de notas
-  const done = useSelector(
-    ({ reducerNotas }) => reducerNotas.done
-  );
+  // Reducer de notas
+  const done = useSelector(({ reducerNotas }) => reducerNotas.done);
+  const notasCurso = useSelector(({ reducerNotas }) => reducerNotas.notasCurso);
 
   const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(false);
-  const [cur, setCurrent] = useState({index: ""});
+  const [openEl, setOpenEl] = useState(false);
+  const [cur, setCurrent] = useState({ index: "" });
 
   useEffect(() => {
-    if(done){
+    if (done) {
       setRows([]);
       setTimeout(() => {
         dispatch(reDon());
-      },8000)
-    };
-   //eslint-disable-next-line
+      }, 8000);
+    }
+    //eslint-disable-next-line
   }, [done]);
+
+  useEffect(() => {
+    if (notasCurso) {
+      setRows(notasCurso);
+    }
+    //eslint-disable-next-line
+  }, [notasCurso]);
 
   const sendJSON = () => {
     if (rows.length) {
@@ -61,8 +74,9 @@ const PreviewNotas = (props) => {
       icon: "ModeEditIcon",
       tip: "Editar",
       onClick: (current) => {
+        console.log(current.current);
         setOpen(true);
-        setCurrent(current.current)
+        setCurrent(current.current);
       },
       propsIButton: {
         style: { padding: 4 },
@@ -77,8 +91,13 @@ const PreviewNotas = (props) => {
       icon: "DeleteIcon",
       tip: "Eliminar",
       onClick: (current) => {
-        let aux = rows.filter((r, index) => index !== current.current.index);
-        setRows(aux);
+        setCurrent(current.current);
+        if (!current.current.row._id) {
+          let aux = rows.filter((r, index) => index !== current.current.index);
+          setRows(aux);
+        } else {
+          setOpenEl(true);
+        }
       },
       propsIButton: {
         style: { padding: 4 },
@@ -99,6 +118,19 @@ const PreviewNotas = (props) => {
     send: true,
     setRows: setRows,
     sendAction: sendJSON,
+    propsBasicSelect: {
+      items: props.cursos.map((curso) => {
+        return {
+          text: curso.Curso_nombre,
+          value: curso._id,
+        };
+      }),
+      currentSelect: (current) => {
+        //
+        dispatch(getNotasCurso({ id_curso: current.value }));
+      },
+      resetValue: done
+    },
   };
 
   const controlersModal = {
@@ -106,12 +138,21 @@ const PreviewNotas = (props) => {
     setOpen,
     confirmClick: (e) => {
       let aux = rows.map((r, index) => {
-          if(index === cur?.index){
-            return e;
-          }
-          return r;
+        if (index === cur?.index) {
+          return e;
         }
-      );
+        return r;
+      });
+      setRows(aux);
+    },
+  };
+
+  const controlersModalEliminar = {
+    open: openEl,
+    setOpen: setOpenEl,
+    confirmClick: (e) => {
+      dispatch(deleteNotasCurso({ id: e.row._id }));
+      let aux = rows.filter((r, index) => index !== e.index);
       setRows(aux);
     },
   };
@@ -124,16 +165,23 @@ const PreviewNotas = (props) => {
         </Typography>
       </Grid>
       <Table {...propsTable} />
-      {done && (<Alert severity="info">Registro exitoso!</Alert>)}
+      {done && <Alert severity="info">Registro exitoso!</Alert>}
       <Modal
-          {...controlersModal}
-          content={<EditarNotas {...controlersModal} current={cur}/>}
-          boxProps={{
-            className: classes.center,
-          }}
-        />
+        {...controlersModal}
+        content={<EditarNotas {...controlersModal} current={cur} />}
+        boxProps={{
+          className: classes.center,
+        }}
+      />
+      <Modal
+        {...controlersModalEliminar}
+        content={<EliminarNota {...controlersModalEliminar} current={cur} />}
+        boxProps={{
+          className: classes.center,
+        }}
+      />
     </Grid>
   );
 };
 
-export default PreviewNotas;
+export default Notas;

@@ -96,7 +96,6 @@ export default function EditarNotas(props) {
             />
           </Grid>
           <Grid item sx={12} md={2}>
-            {" "}
             <TextField
               name = "estudiante_nota"
               variant="filled"
@@ -127,7 +126,6 @@ export default function EditarNotas(props) {
       <Box component="div" className={classes.box}>
         <CardActions>
           <Button
-            size="small"
             variant="contained"
             onClick={editarNotas}
             className={classes.cerrarbt}
@@ -135,7 +133,6 @@ export default function EditarNotas(props) {
             Editar Nota
           </Button>
           <Button
-            size="small"
             variant="contained"
             onClick={cancelar}
             className={classes.cancelarbt}

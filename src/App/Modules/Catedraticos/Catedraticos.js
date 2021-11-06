@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Main from "../General/Main";
 import Alumnos from "./components/Alumnos";
-import PreviewNotas from "./components/PreviewNotas";
+import Notas from "./components/Notas";
 import Cursos from "./components/Cursos";
 import { useHistory } from "react-router-dom"; //redirige a otras paginas
 import { getRolByCod } from "../../Utils/catalogos";
@@ -62,7 +62,7 @@ export const Catedraticos = () => {
         ) : mainBar[1].text === item.text ? (
           <Cursos data={cursosCLog || []} />
         ) : mainBar[2].text === item.text ? (
-          <PreviewNotas/>
+          <Notas cursos={cursosCLog || []}/>
         ) : null
       }
     />

@@ -7,7 +7,7 @@ import { getListaEstudiantesByIC } from "../../../Redux/actions/estudiantes.acti
 const columns = [
   { id: "carnet", label: "Carnet", minWidth: 150 },
   { id: "nombreCompleto", label: "Nombre", minWidth: 150 },
-  { id: "cursos", label: "Cursos del Estudiante", minWidth: 150 },
+  { id: "cursos", label: "Cursos del Compañero", minWidth: 150 },
   { id: "correo", label: "Correo", minWidth: 150 },
   { id: "usuario", label: "Usuario", minWidth: 150 },
   { id: "disponibilidad", label: "Disponibilidad", minWidth: 50 },

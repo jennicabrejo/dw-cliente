@@ -28,7 +28,7 @@ export default function Buscador(props) {
           onBlur={(e) => setArg(e.target.value)}
           InputProps={{
             endAdornment: (
-              <InputAdornment>
+              <InputAdornment position="end">
                 <IconButton style={{ padding: 4 }} onClick = { () => {
                   props.onClick(argumento);
                 }}>

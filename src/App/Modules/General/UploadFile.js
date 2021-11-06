@@ -53,6 +53,7 @@ export default function UploadFile(props) {
     <Stack direction="row" alignItems="center" spacing={2}>
       <label htmlFor="icon-button-file">
         <Input
+          key={"inputfilexlsx"}
           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           id="icon-button-file"
           type="file"
@@ -60,6 +61,7 @@ export default function UploadFile(props) {
         />
         <Tooltip title="Cargar XLSX">
           <IconButton
+            key={"ibutonupload"}
             color="primary"
             aria-label="upload picture"
             component="span"

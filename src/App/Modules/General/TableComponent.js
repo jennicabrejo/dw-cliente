@@ -64,9 +64,9 @@ export default function TableComponent(props) {
           <Paper style={{ width: "100%", overflow: "hidden" }}>
             <TableHeader {...props} />
             <TableContainer>
-              <Table stickyHeader aria-label="sticky table">
+              <Table stickyHeader aria-label="sticky table" key="table_">
                 <TableHead>
-                  <TableRow>
+                  <TableRow key="headrow">
                     {props.columns.map((column) => (
                       <TableCell
                         key={column.id}
@@ -87,7 +87,7 @@ export default function TableComponent(props) {
                           hover
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.code}
+                          key={`TR${index}`}
                         >
                           {props.columns.map((column) => {
                             const value = row[column.id];

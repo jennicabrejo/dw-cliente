@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useEffect} from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -13,9 +13,15 @@ export default function BasicSelect(props) {
     props.currentSelect(event.target);
   };
 
+  useEffect(() => {
+    if(props.resetValue){
+      setItem("");
+    }
+  }, [props.resetValue])
+
   return (
     <FormControl variant="standard" sx={{ m: 1 }} style={{ width: "100%" }}>
-      <InputLabel id="demo-simple-select-standard-label">Elemento</InputLabel>
+      <InputLabel id="demo-simple-select-standard-label" key="labelbs">Elemento</InputLabel>
       <Select
         name="basicSelect"
         labelId="demo-simple-select-standard-label"
@@ -26,9 +32,10 @@ export default function BasicSelect(props) {
         label="Elemento"
         fullWidth
       >
-        {props.items.map((item) => {
+        {props.items.map((item, index) => {
           return (
             <MenuItem
+              key={`miT${index}`}
               name={item.text}
               value={item.value}
               style={{ width: "100%", justifyContent: "left", paddingLeft: 8 }}

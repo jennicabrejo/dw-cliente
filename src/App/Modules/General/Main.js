@@ -60,7 +60,7 @@ export default function Main(props) {
           <ListItemIcon>
             <AccountCircleIcon />
           </ListItemIcon>
-          <ListItemText primary={"Sesion"} />
+          <ListItemText primary={sessionStorage.getItem("usuario_nombre")?.toLocaleUpperCase()} />
         </ListItem>
         <Divider />
         {props.menuDrawer?.map((itBar, index) => (
@@ -94,7 +94,6 @@ export default function Main(props) {
           <Toolbar>
             {props.menuDrawer ? (
               <IconButton
-                size="large"
                 edge="start"
                 color="inherit"
                 aria-label="menu"
@@ -104,7 +103,6 @@ export default function Main(props) {
               </IconButton>
             ) : (
               <IconButton
-                size="large"
                 edge="start"
                 color="inherit"
                 aria-label="menu"

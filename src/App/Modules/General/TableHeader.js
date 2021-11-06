@@ -9,7 +9,7 @@ import UploadFile from "./UploadFile";
 
 export default function TableHeader(props) {
   return (
-    <Toolbar>
+    <Toolbar key="actiontabletoolbar">
       <Box display="flex" flexGrow={1}>
         <Typography variant="h6" id="tableTitle" component="div">
           {props.title || ""}
@@ -21,7 +21,7 @@ export default function TableHeader(props) {
       )}
       {props.send && (
         <Tooltip title="Subir notas">
-          <IconButton onClick={() => props.sendAction()}>
+          <IconButton onClick={() => props.sendAction()} key={"sendfilejson"}>
               <SendIcon/>
           </IconButton>
         </Tooltip>

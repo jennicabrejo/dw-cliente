@@ -22,7 +22,7 @@ export default function TableActionsCell(props) {
             return (
               <Tooltip title={element.tip || ""}>
                 <IconButton
-                  key={`I${index}`}
+                  key={`I${element.tip}${index}`}
                   aria-label={`I${index}`}
                   {...element.propsIButton}
                   onClick={() => {
